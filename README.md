@@ -14,11 +14,18 @@ A set of [Rainmeter](https://www.rainmeter.net/) widgets for Windows: hardware m
 
 ## Screenshots
 
-<p align="center">
-  <img src="docs/screenshots/column.png" alt="Widget column: GPU, network, CPU, drives, Valheim server, now playing and weather" height="640">
-  &nbsp;
-  <img src="docs/screenshots/themes.gif" alt="The same cards cycling through the five colour themes" height="640">
-</p>
+<table align="center">
+  <tr>
+    <td rowspan="3" valign="top"><img src="docs/screenshots/themes.gif" alt="GPU, network, CPU and drives cards cycling through the five colour themes" width="260"></td>
+    <td><img src="docs/screenshots/valheim.png" alt="Valheim server card" width="340"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/nowplaying.png" alt="Now Playing card" width="340"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/weather.png" alt="Weather card" width="340"></td>
+  </tr>
+</table>
 <p align="center">
   <img src="docs/screenshots/dock.png" alt="Game dock with two rows of game icons" width="480">
 </p>
