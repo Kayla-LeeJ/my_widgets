@@ -1,0 +1,21 @@
+# Made by ScanGames.ps1 on each PC: the game list for that machine and the icons it downloaded
+SystemMonitor/Dock/Games.inc
+SystemMonitor/@Resources/Icons/auto/
+
+# Rainmeter's own settings and per-PC skin positions (they live in %APPDATA%, but just in case)
+Rainmeter.ini
+Rainmeter.data
+
+# Downloaded skin packages
+*.rmskin
+
+# Backups and logs
+*.bak
+*.log
+
+# Windows and editor clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
