@@ -1,3 +1,5 @@
+; Defaults for every widget. Don't put your own settings here: run Setup.ps1, or put them in
+; MyVariables.inc next to this file. It's loaded last, overrides anything below and isn't committed.
 [Variables]
 ; ---------------------------------------------------------------- LibreHardwareMonitor
 ; Remote Web Server port (LibreHardwareMonitor: Options > Remote Web Server > Port)
@@ -17,12 +19,12 @@ HelperPort=8086
 HelperOk=0
 
 ; ---------------------------------------------------------------- Sensors
-; These IDs match the PC this was built on (Intel i9-9900, AMD RX 6600 XT, three drives).
-; On another PC, replace them with your own: see "Set it up for your hardware" in README.txt.
+; Example IDs (Intel CPU, AMD GPU, three drives). Setup.ps1 finds yours and saves them to
+; MyVariables.inc; the IDs are listed at http://localhost:8085 too.
 CpuPackageTemp=/intelcpu/0/temperature/10
 CpuCoreMaxTemp=/intelcpu/0/temperature/0
 
-GPUName=RX 6600 XT
+GPUName=GPU
 GpuLoad=/gpu-amd/0/load/0
 GpuTemp=/gpu-amd/0/temperature/0
 GpuHotSpot=/gpu-amd/0/temperature/7
@@ -30,21 +32,21 @@ GpuVramUsed=/gpu-amd/0/smalldata/0
 GpuVramTotal=/gpu-amd/0/smalldata/2
 
 ; Drive rows: label, temperature sensor, used-space sensor
-Drive1Label=C:  NVMe SSD
+Drive1Label=C:  System
 Drive1Temp=/nvme/1/temperature/0
 Drive1Used=/nvme/1/load/30
-Drive2Label=D:  WD Blue
+Drive2Label=D:  Data
 Drive2Temp=/hdd/0/temperature/0
 Drive2Used=/hdd/0/load/30
-Drive3Label=E:  My Passport
+Drive3Label=E:  Backup
 Drive3Temp=/hdd/2/temperature/0
 Drive3Used=/hdd/2/load/30
 
 ; ---------------------------------------------------------------- Weather (open-meteo.com, no key needed)
-; Approximate location, looked up once from this PC's IP address. Change to your own.
-WeatherCity=Cape Town
-WeatherLat=-33.93
-WeatherLon=18.42
+; Example location. Setup.ps1 looks yours up from a city name.
+WeatherCity=London
+WeatherLat=51.51
+WeatherLon=-0.13
 ; celsius or fahrenheit
 WeatherUnits=celsius
 
@@ -78,7 +80,7 @@ DiskHot=95
 
 ; ---------------------------------------------------------------- Look
 ; Colour theme: a file in @Resources\Themes (Midnight, Sakura, Forest, Ocean, Mono).
-; Right-click any widget > Theme to switch. The colours below are the fallback.
+; Right-click any widget > Theme to switch (saved in MyVariables.inc). The colours below are the fallback.
 Theme=Midnight
 ColorBg=18,18,24,190
 ColorBorder=255,255,255,25
@@ -90,10 +92,14 @@ ColorWarm=255,180,60
 ColorHot=255,80,80
 ColorUpload=200,130,255
 ColorGood=110,220,130
-@IncludeTheme=#@#Themes\#Theme#.inc
 ; Graph fill transparency (0-255)
 GraphFillAlpha=50
 
 FontFace=Segoe UI
 ; Icon font for the music buttons. Windows 10 doesn't have Segoe Fluent Icons: use Segoe MDL2 Assets there
 IconFont=Segoe Fluent Icons
+
+; ---------------------------------------------------------------- This PC
+; Last, so it wins; then the theme it picks
+@IncludeMine=#@#MyVariables.inc
+@IncludeTheme=#@#Themes\#Theme#.inc

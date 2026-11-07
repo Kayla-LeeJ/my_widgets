@@ -1,219 +1,168 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="my_widgets: animated banner with floating CPU, GPU, weather, music and game cards" width="100%">
+  <img src="docs/banner.svg" alt="my_widgets banner" width="100%">
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-50c8ff?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 | 11">
-  <img src="https://img.shields.io/badge/Rainmeter-4.5%2B-c882ff?style=for-the-badge" alt="Rainmeter 4.5+">
-  <img src="https://img.shields.io/badge/PowerShell-5.1-6edc82?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell 5.1">
-  <img src="https://img.shields.io/badge/vibes-immaculate-ffb43c?style=for-the-badge" alt="vibes: immaculate">
-  <br>
   <a href="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml"><img src="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml/badge.svg" alt="Checks"></a>
-  <a href="https://github.com/Kayla-LeeJ/my_widgets/releases/latest"><img src="https://img.shields.io/badge/download-.rmskin-c882ff" alt="Download .rmskin"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6edc82" alt="MIT license"></a>
+  <a href="https://github.com/Kayla-LeeJ/my_widgets/releases/latest"><img src="https://img.shields.io/github/v/release/Kayla-LeeJ/my_widgets?label=release" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+  <img src="https://img.shields.io/badge/Rainmeter-4.5%2B-555" alt="Rainmeter 4.5+">
+  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-555" alt="Windows 10 | 11">
 </p>
 
-<p align="center"><b>A matching set of glassy Rainmeter widgets that make your desktop feel alive</b><br>
-hardware stats 🌡️ · a weather sky that follows the real sun 🌅 · now playing 🎵 · a game launcher that finds your games by itself 🎮</p>
+A set of [Rainmeter](https://www.rainmeter.net/) widgets for Windows: hardware monitoring, weather, now playing, a Valheim server card and a game launcher that finds installed games on its own. All cards share one look and one settings file.
 
----
-
-## 📸 The real thing
+## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/column.png" alt="The widget column: GPU, network, CPU, drives, Valheim server, now playing and weather cards" height="720">
-  &nbsp;&nbsp;&nbsp;
-  <img src="docs/screenshots/dock.png" alt="The game dock with two rows of game icons" width="480" align="top">
+  <img src="docs/screenshots/column.png" alt="Widget column: GPU, network, CPU, drives, Valheim server, now playing and weather" height="640">
+  &nbsp;
+  <img src="docs/screenshots/themes.gif" alt="The same cards cycling through the five colour themes" height="640">
+</p>
+<p align="center">
+  <img src="docs/screenshots/dock.png" alt="Game dock with two rows of game icons" width="480">
 </p>
 
----
+## Widgets
 
-## ✨ What's in the box
+| Widget | Shows |
+|---|---|
+| **CPU** | Usage, package temperature, hottest core. Values turn amber and red past configurable thresholds. |
+| **GPU** | Load, core and hot-spot temperature, VRAM use. |
+| **Drives** | Temperature and used space for up to three drives. |
+| **Network** | Download and upload speed on the active adapter. |
+| **Weather** | Current conditions and a 3-day forecast from open-meteo.com. The background follows the actual sunrise, sunset, moon phase and weather. |
+| **Now Playing** | Clock, date, and the track in Windows' media controls (Spotify, browsers, Media Player), with play/pause/skip. |
+| **Links** | YouTube and Spotify shortcuts next to Now Playing. |
+| **Valheim** | Status of a local Valheim dedicated server: online/offline, players, crossplay join code (click to copy). Start and stop buttons. |
+| **Game Dock** | Every installed Steam, Battle.net and Epic game, rescanned every minute. A dot marks games that are running. |
 
-| | Widget | What it does |
-|---|---|---|
-| 🧠 | **CPU** | Usage, package temperature and your hottest core, turning cool blue → warm orange → hot red |
-| 🎨 | **GPU** | Load, core and hot-spot temperature, and VRAM use |
-| 💾 | **Drives** | Temperature and how full each drive is |
-| 🌐 | **Network** | Live download and upload speed (no extra software needed) |
-| 🌦️ | **Weather** | Current weather and a 3-day forecast over a *living sky*: real sunrise and sunset, stars and the actual moon phase at night, clouds, rain and snow to match |
-| 🎵 | **Now Playing** | Clock, date, and whatever's playing in Windows' media controls (Spotify, YouTube in the browser, Media Player…), with play/pause/skip |
-| 🔗 | **Links** | A tiny YouTube + Spotify strip that sits beside Now Playing |
-| ⚔️ | **Valheim** | Your Valheim dedicated server: online/offline, players, and the crossplay join code (click to copy!) |
-| 🎮 | **Game Dock** | Every installed game from **Steam**, **Battle.net** and **Epic**, found automatically. Install something new and its icon pops up within a minute. A little dot shows what's running |
+Right-click any widget and choose **Theme** to switch all of them between Midnight, Sakura, Forest, Ocean and Mono.
 
-> [!TIP]
-> **Right-click any widget → Theme** to repaint the whole desktop in one click: 🌌 Midnight · 🌸 Sakura · 🌲 Forest · 🌊 Ocean · ⚫ Mono
+## Requirements
 
-> [!NOTE]
-> Every widget reads its settings from one file: [`SystemMonitor/@Resources/Variables.inc`](SystemMonitor/@Resources/Variables.inc). Colours, thresholds, your city, which drives to show… it's all in there.
+| | |
+|---|---|
+| Windows 10 or 11 | |
+| [Rainmeter](https://www.rainmeter.net/) 4.5 or later | |
+| Windows PowerShell 5.1 | Included with Windows |
+| [LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/releases) | For the CPU, GPU and Drives cards |
+| Steam, Battle.net, Epic Games Launcher | Optional, for the Game Dock |
+| Valheim Dedicated Server (Steam) | Optional, for the Valheim card |
+| Thunderstore Mod Manager | Optional, for the dock's modded Valheim launcher |
 
----
+The weather data needs no API key.
 
-## 🧰 Prerequisites
+## Install
 
-| Need it? | What | Why |
-|---|---|---|
-| ✅ Required | **Windows 10 or 11** | Rainmeter is Windows-only |
-| ✅ Required | **[Rainmeter 4.5+](https://www.rainmeter.net/)** | Draws the widgets |
-| ✅ Required | **Windows PowerShell 5.1** | Already built into Windows; runs the helper scripts |
-| 🌡️ For CPU / GPU / Drives | **[LibreHardwareMonitor](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/releases)** | Reads temperatures and loads |
-| 🎮 Optional | Steam, Battle.net and/or Epic Games Launcher | Whatever you have shows up in the Game Dock |
-| ⚔️ Optional | Valheim Dedicated Server (Steam) | For the Valheim card |
-| 🧪 Optional | Thunderstore Mod Manager | For the dock's *modded* Valheim button |
+### From a release
 
-The Weather card uses [open-meteo.com](https://open-meteo.com/), which is free and needs **no API key**. 🎉
+1. Install Rainmeter.
+2. Download the latest `my_widgets_x.y.z.rmskin` from [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases/latest) and open it.
+3. Click **Install**. The Weather card loads automatically; load the others from **Manage** (see [Load the widgets](#load-the-widgets)).
 
----
+Installing a newer `.rmskin` later keeps your `MyVariables.inc`.
 
-## 🚀 Installation
-
-### Option A: the one-click way 🪄
-1. Install [Rainmeter](https://www.rainmeter.net/).
-2. Grab the latest **`my_widgets_x.y.z.rmskin`** from [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases/latest).
-3. Double-click it → **Install**. Done! The Weather card loads straight away. Load the rest from **Manage** (step 5 below).
-
-Updating later? Just install the newer `.rmskin`. Your settings in `Variables.inc` are kept. ✨
-
-### Option B: the developer way 🛠️
+### From source
 
 ```bash
 git clone https://github.com/Kayla-LeeJ/my_widgets.git
 ```
 
-Then link the repo into Rainmeter's skins folder, so `git pull` updates your desktop and your edits are ready to commit. Run this in PowerShell from inside the cloned repo:
+Link the skin into Rainmeter's skins folder so the repo and your desktop stay the same files. In PowerShell, from the repo folder:
 
 ```powershell
 New-Item -ItemType Junction -Path "$([Environment]::GetFolderPath('MyDocuments'))\Rainmeter\Skins\SystemMonitor" -Target "$PWD\SystemMonitor"
 ```
 
-<details>
-<summary>Rather copy than link?</summary>
+Copying the `SystemMonitor` folder into `Documents\Rainmeter\Skins` also works, but then needs repeating after each `git pull`.
 
-Copy the `SystemMonitor` folder into `Documents\Rainmeter\Skins`. You'll need to copy again after each `git pull`.
-</details>
+## Setup
 
----
+### LibreHardwareMonitor
 
-## 🔧 Setup
+1. Run LibreHardwareMonitor as administrator.
+2. Enable **Options > Remote Web Server > Run** (port `8085`).
+3. Enable **Options > Run On Windows Startup** and **Start Minimized**.
 
-### 1. Turn on LibreHardwareMonitor (for the CPU, GPU and Drives cards)
-1. Run **LibreHardwareMonitor** as administrator.
-2. Turn on **Options → Remote Web Server → Run**. The default port `8085` is what the widgets expect.
-3. Tick **Options → Run On Windows Startup** and **Start Minimized** so it's always there.
+### Settings
 
-### 2. Run the setup wizard 🧙
-From the repo folder:
+Defaults live in `SystemMonitor/@Resources/Variables.inc`. Your own values go in `MyVariables.inc` in the same folder, which overrides the defaults and is ignored by git, so your location and hardware stay out of the repo.
+
+The setup script fills it in:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Setup.ps1
 ```
 
-It finds your CPU, GPU and drive sensors, matches drives to their letters, asks for your city and looks up its coordinates (free, no API key), then saves everything to `Variables.inc` and refreshes Rainmeter. Add `-WhatIf` to preview the changes first, or `-City "Tokyo" -Units fahrenheit` to skip the question.
+It reads your CPU, GPU and drive sensor IDs from LibreHardwareMonitor, matches drives to their letters, looks up coordinates for a city you enter, saves everything to `MyVariables.inc` and refreshes Rainmeter.
 
-<details>
-<summary>Doing it by hand instead</summary>
+| Option | |
+|---|---|
+| `-WhatIf` | Show the changes without saving |
+| `-City "Tokyo"` | Skip the city prompt |
+| `-Units fahrenheit` | Temperature units for the weather card |
 
-Open <http://localhost:8085>, find your sensor IDs (like `/intelcpu/0/temperature/10`) and paste them into the **Sensors** section of `SystemMonitor/@Resources/Variables.inc`. Set `WeatherCity`, `WeatherLat` and `WeatherLon` in the **Weather** section.
-</details>
+Other settings you may want to override in `MyVariables.inc` (under a `[Variables]` line):
 
-### 3. Make it yours
-In `SystemMonitor/@Resources/Variables.inc`:
-- 🎨 `Theme`: `Midnight`, `Sakura`, `Forest`, `Ocean` or `Mono` (or right-click any widget)
-- 🎮 `DockColumns`: icons per row in the Game Dock
-- 🙈 `DockHide`: games to keep off the dock, e.g. `Outlast,Wallpaper Engine`
-- 🌡️ The **Thresholds** section: when temperatures turn warm and hot
+| Setting | Default | |
+|---|---|---|
+| `Theme` | `Midnight` | Also set by the right-click menu |
+| `DockColumns` | `9` | Game Dock icons per row |
+| `DockHide` | *(empty)* | Games to leave out, by name or Steam app ID: `Outlast,Wallpaper Engine` |
+| `CpuWarm`, `CpuHot`, ... | | Temperature thresholds, see the Thresholds section of `Variables.inc` |
 
-### 4. Load them
-Right-click the Rainmeter icon in the tray → **Manage** → open **SystemMonitor**, then pick each widget and hit **Load**. Drag them around until it looks right. 🖱️
+### Load the widgets
 
----
+Right-click the Rainmeter tray icon, open **Manage**, expand **SystemMonitor**, and load each widget. Drag them into place.
 
-## 🎮 How the Game Dock finds your games
+## Game Dock
 
-```mermaid
-flowchart LR
-    T["⏱️ every 60 s"] --> S["ScanGames.ps1"]
-    S --> A["Steam libraries"]
-    S --> B["Battle.net installs"]
-    S --> C["Epic manifests"]
-    A & B & C --> L{"list changed?"}
-    L -- "yes" --> W["write Games.inc"] --> R["🔄 refresh dock"]
-    L -- "no" --> Z["😴 nothing to do"]
-```
+`ScanGames.ps1` runs every 60 seconds. It reads Steam's library manifests, Battle.net's uninstall entries and Epic's install manifests, and rewrites `Dock/Games.inc` only when the list of games changes. Icons come from Steam's CDN or from the game's executable and are cached in `@Resources/Icons/auto`. Both are generated per PC and not committed.
 
-- Icons come from Steam's CDN in HD, or straight out of the game's `.exe`, and are saved in `@Resources/Icons/auto` (not committed, every PC makes its own).
-- Want a custom icon or launch button for one game? Add it to the `$custom` table at the top of [`ScanGames.ps1`](SystemMonitor/@Resources/ScanGames.ps1). That's how modded Valheim and the **SRV** badge work.
+To give a game a custom icon, launch command or badge, add it to the `$custom` table at the top of [`ScanGames.ps1`](SystemMonitor/@Resources/ScanGames.ps1).
 
----
+## Themes
 
-## 🎨 Make your own theme
+Themes are files in [`SystemMonitor/@Resources/Themes`](SystemMonitor/@Resources/Themes) that set ten colour variables. To add one, copy an existing file, change the colours (`R,G,B` or `R,G,B,alpha`) and set `Theme=YourTheme` in `MyVariables.inc`. To list it in the right-click menu, add a `ContextTitle`/`ContextAction` pair in `Common.inc`, `Dock/Dock.ini` and `Links/Links.ini`.
 
-Copy any file in [`SystemMonitor/@Resources/Themes`](SystemMonitor/@Resources/Themes), rename it (say `Lavender.inc`), change the colours (`R,G,B` or `R,G,B,alpha`), then set `Theme=Lavender` in `Variables.inc`. To get it in the right-click menu too, add a line for it next to the others in `Common.inc`, `Dock.ini` and `Links.ini`.
-
----
-
-## 🗂️ What's where
+## Repository layout
 
 ```text
-my_widgets/
-├── Setup.ps1                🧙 setup wizard
-├── tools/Build-Rmskin.ps1   📦 builds the one-click installer
-├── .github/workflows/       🤖 checks on every push, releases on every tag
-└── SystemMonitor/           the skin itself
-    └── @Resources/
-        ├── Variables.inc    ← ⭐ all your settings
-        └── Themes/          🎨 colour themes
-```
-
-```text
-SystemMonitor/
+Setup.ps1                     setup script
+tools/Build-Rmskin.ps1        builds the .rmskin installer
+tools/RMSKIN.bmp              installer header image
+.github/workflows/            checks on push, release on tag, Claude GitHub App
+docs/                         banner and screenshots
+SystemMonitor/                the Rainmeter skin
 ├── @Resources/
-│   ├── Variables.inc        ← ⭐ all your settings
-│   ├── Common.inc, Helper.inc, LHM.inc   shared bits the widgets include
-│   ├── DeskHelper.ps1       background helper: now playing + Valheim server status
-│   ├── ScanGames.ps1        finds installed games for the dock
-│   ├── StartValheim.ps1     starts modded Valheim via your Thunderstore profile
-│   ├── StopValheimServer.ps1  stops the server safely (saves the world first)
+│   ├── Variables.inc         defaults
+│   ├── MyVariables.inc       your settings (not committed)
+│   ├── Themes/               colour themes
+│   ├── Common.inc, Helper.inc, LHM.inc
+│   ├── DeskHelper.ps1        local helper for Now Playing and the Valheim card (port 8086)
+│   ├── ScanGames.ps1         game detection for the dock
+│   ├── StartValheim.ps1      starts Valheim with a Thunderstore profile
+│   ├── StopValheimServer.ps1 stops the server cleanly so the world is saved
 │   ├── Weather.lua, Helpers.lua
 │   └── Icons/, Images/
-├── CPU/  GPU/  Drives/  Network/
-├── Weather/  NowPlaying/  Links/
+├── CPU/ GPU/ Drives/ Network/
+├── Weather/ NowPlaying/ Links/
 ├── Valheim/
 └── Dock/
 ```
 
----
+## Troubleshooting
 
-## 🩹 Troubleshooting
+**CPU, GPU or Drives cards are empty.** LibreHardwareMonitor isn't running or its web server is off. If <http://localhost:8085> doesn't load, the widgets can't read it either. If it loads, run `Setup.ps1` to refresh the sensor IDs.
 
-<details>
-<summary>🌡️ CPU / GPU / Drives show nothing</summary>
+**Now Playing doesn't update.** The card talks to `DeskHelper.ps1` on port 8086. Refresh the Now Playing skin to restart it, and check nothing else uses that port.
 
-LibreHardwareMonitor isn't running, or its web server is off. Open <http://localhost:8085>. If that page doesn't load, the widgets can't read it either. If it loads, check the sensor IDs in `Variables.inc` match yours.
-</details>
+**The Valheim card never shows players or a join code.** The server needs to write a log: add `-logFile` to its `start_headless_server.bat`.
 
-<details>
-<summary>🎵 Now Playing is stuck</summary>
+**A game is missing from the dock.** The dock rescans every minute, and Steam games appear once fully downloaded. Check `DockHide` if a game should be there but isn't.
 
-It talks to `DeskHelper.ps1` on port `8086`. Refresh the Now Playing skin to restart it, and make sure nothing else is using that port.
-</details>
-
-<details>
-<summary>⚔️ Valheim card never shows players or a join code</summary>
-
-The server has to write a log. Add `-logFile` to the server's `start_headless_server.bat`.
-</details>
-
-<details>
-<summary>🎮 A game is missing from the dock (or one shouldn't be there)</summary>
-
-Wait a minute, since the dock checks every 60 seconds. Steam games only appear once fully downloaded. To hide something, add its name or Steam app ID to `DockHide` in `Variables.inc`.
-</details>
-
----
-
-## 📦 Releasing a new version
+## Releasing
 
 ```bash
 git tag v1.1.0
@@ -223,16 +172,8 @@ git tag v1.1.0
 git push origin v1.1.0
 ```
 
-GitHub builds `my_widgets_1.1.0.rmskin` and publishes it on the [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases) page. 🚀 To build one locally instead: `.\tools\Build-Rmskin.ps1 -Version 1.1.0` (it lands in `dist\`).
+The Release workflow builds `my_widgets_1.1.0.rmskin` and publishes it on the Releases page. To build locally: `.\tools\Build-Rmskin.ps1 -Version 1.1.0` (output in `dist\`).
 
----
+## License
 
-## 📜 License
-
-[MIT](LICENSE): use it, tweak it, share it, just keep the copyright notice. 💜
-
-Game logos and artwork (in `SystemMonitor/@Resources/Icons` and `Images`, and the icons the Game Dock downloads) belong to their respective owners (Blizzard Entertainment, Iron Gate, Lazy Bear Games and the other game studios). They're used here for personal, non-commercial fan purposes and aren't covered by the MIT license.
-
----
-
-<p align="center">Made with 💜, too much coffee, and a desktop that refuses to be boring.</p>
+[MIT](LICENSE). Game logos and artwork (in `SystemMonitor/@Resources/Icons` and `Images`, and the icons the dock downloads) belong to their respective owners, such as Blizzard Entertainment, Iron Gate and Lazy Bear Games, and are not covered by the MIT license.

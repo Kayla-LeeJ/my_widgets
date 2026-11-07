@@ -2,6 +2,9 @@
 SystemMonitor/Dock/Games.inc
 SystemMonitor/@Resources/Icons/auto/
 
+# Each PC's own settings (Setup.ps1 and the Theme menu write here)
+SystemMonitor/@Resources/MyVariables.inc
+
 # Rainmeter's own settings and per-PC skin positions (they live in %APPDATA%, but just in case)
 Rainmeter.ini
 Rainmeter.data

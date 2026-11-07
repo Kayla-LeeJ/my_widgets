@@ -1,4 +1,5 @@
-﻿# Setup wizard: fills in SystemMonitor\@Resources\Variables.inc for this PC.
+﻿# Setup wizard: saves this PC's settings to SystemMonitor\@Resources\MyVariables.inc
+# (which overrides the defaults in Variables.inc and isn't committed).
 #   - CPU, GPU and drive sensor IDs, read from LibreHardwareMonitor's web server
 #   - drive labels, matched to their Windows drive letters
 #   - weather location, looked up from a city name (open-meteo.com, no key needed)
@@ -15,24 +16,35 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 
-$varsPath = Join-Path $PSScriptRoot 'SystemMonitor\@Resources\Variables.inc'
-$text = [IO.File]::ReadAllText($varsPath)
+$resources = Join-Path $PSScriptRoot 'SystemMonitor\@Resources'
+$defaults = [IO.File]::ReadAllText((Join-Path $resources 'Variables.inc'))
+$minePath = Join-Path $resources 'MyVariables.inc'
+$mine = if (Test-Path $minePath) { [IO.File]::ReadAllText($minePath) } else {
+	"; This PC's own settings. They override Variables.inc and are never committed (see .gitignore).`r`n" +
+	"; Setup.ps1 and the right-click Theme menu write here.`r`n[Variables]`r`n"
+}
 $changes = [ordered]@{}
 
-function Get-Var($name) { [regex]::Match($text, "(?m)^$name=(.*?)\r?$").Groups[1].Value }
+# The value in effect: this PC's own, else the default
+function Get-Var($name) {
+	foreach ($text in $mine, $defaults) {
+		$m = [regex]::Match($text, "(?m)^$name=(.*?)\r?$")
+		if ($m.Success) { return $m.Groups[1].Value }
+	}
+}
 function Say($icon, $msg, $color = 'Gray') { Write-Host "  $icon  $msg" -ForegroundColor $color }
 
 Write-Host ''
-Write-Host '  ✨ my_widgets setup ✨' -ForegroundColor Magenta
+Write-Host '  my_widgets setup' -ForegroundColor Magenta
 Write-Host ''
 
 # ---------------------------------------------------------------- Sensors (LibreHardwareMonitor)
-Write-Host '  🌡️  Hardware sensors' -ForegroundColor Cyan
+Write-Host '  Hardware sensors' -ForegroundColor Cyan
 try {
 	$tree = Invoke-RestMethod "http://localhost:$Port/data.json" -TimeoutSec 5
 } catch {
 	$tree = $null
-	Say '⚠️' "LibreHardwareMonitor isn't answering on port $Port." Yellow
+	Say '!' "LibreHardwareMonitor isn't answering on port $Port." Yellow
 	Say '  ' 'Start it as administrator and turn on Options > Remote Web Server > Run, then run this again.' Yellow
 	Say '  ' 'Skipping CPU, GPU and drive sensors for now.' Yellow
 }
@@ -48,7 +60,7 @@ if ($tree) {
 			})
 		}
 		foreach ($child in $node.Children) {
-			# Hardware nodes carry a HardwareId; sensor groups ("Temperatures"…) don't change the hardware
+			# Hardware nodes carry a HardwareId; sensor groups ("Temperatures"...) don't change the hardware
 			$hw = if ($child.HardwareId) { $child.Text.Trim() } else { $hardware }
 			Walk $child $hw
 		}
@@ -68,8 +80,8 @@ if ($tree) {
 	if ($pkg) {
 		$changes.CpuPackageTemp = $pkg.Id
 		$changes.CpuCoreMaxTemp = $max.Id
-		Say '🧠' "CPU: $($pkg.Hardware)" Green
-	} else { Say '⚠️' 'No CPU temperature found.' Yellow }
+		Say '-' "CPU: $($pkg.Hardware)" Green
+	} else { Say '!' 'No CPU temperature found.' Yellow }
 
 	# GPU
 	$gpu = '^gpu-(amd|nvidia|intel)/'
@@ -85,8 +97,8 @@ if ($tree) {
 			$hit = Find ($load.Device) $pair[1] $pair[2]
 			if ($hit) { $changes[$pair[0]] = $hit.Id }
 		}
-		Say '🎨' "GPU: $($load.Hardware)" Green
-	} else { Say '⚠️' 'No GPU found.' Yellow }
+		Say '-' "GPU: $($load.Hardware)" Green
+	} else { Say '!' 'No GPU found.' Yellow }
 
 	# Drives: match LibreHardwareMonitor's drive names to Windows' disks to get the drive letters
 	$disks = foreach ($d in Get-Disk) {
@@ -108,19 +120,19 @@ if ($tree) {
 	$drives = @($drives | Where-Object { $_.Temp -and $_.Used } | Sort-Object Letters | Select-Object -First 3)
 	for ($i = 0; $i -lt $drives.Count; $i++) {
 		$n = $i + 1
-		# Keep a label you've already customised for the same drive letter
-		$old = Get-Var "Drive${n}Label"
+		# Keep a label this PC already has for the same drive letter (not the template's example)
+		$old = [regex]::Match($mine, "(?m)^Drive${n}Label=(.*?)\r?$").Groups[1].Value
 		$changes["Drive${n}Label"] = if ($old -like "$($drives[$i].Letters)*") { $old } else { $drives[$i].Label }
 		$changes["Drive${n}Temp"] = $drives[$i].Temp
 		$changes["Drive${n}Used"] = $drives[$i].Used
-		Say '💾' $changes["Drive${n}Label"] Green
+		Say '-' $changes["Drive${n}Label"] Green
 	}
-	if ($drives.Count -lt 3) { Say '⚠️' "Found $($drives.Count) drive(s); the Drives card has 3 rows, so the others keep their current settings." Yellow }
+	if ($drives.Count -lt 3) { Say '!' "Found $($drives.Count) drive(s); the Drives card has 3 rows, so the others keep their current settings." Yellow }
 }
 
 # ---------------------------------------------------------------- Weather location
 Write-Host ''
-Write-Host '  🌦️  Weather' -ForegroundColor Cyan
+Write-Host '  Weather' -ForegroundColor Cyan
 if (-not $City) {
 	$current = Get-Var 'WeatherCity'
 	$City = Read-Host "  Your city (Enter keeps $current)"
@@ -133,31 +145,36 @@ if ($place) {
 	$changes.WeatherCity = $place.name
 	$changes.WeatherLat = [math]::Round($place.latitude, 2).ToString([Globalization.CultureInfo]::InvariantCulture)
 	$changes.WeatherLon = [math]::Round($place.longitude, 2).ToString([Globalization.CultureInfo]::InvariantCulture)
-	Say '📍' "$($place.name), $($place.country)" Green
-} else { Say '⚠️' "Couldn't find '$City' (or no internet), so the location stays as it is." Yellow }
+	Say '-' "$($place.name), $($place.country)" Green
+} else { Say '!' "Couldn't find '$City' (or no internet), so the location stays as it is." Yellow }
 if ($Units) { $changes.WeatherUnits = $Units }
 
-# ---------------------------------------------------------------- Write Variables.inc
+# ---------------------------------------------------------------- Write MyVariables.inc
 Write-Host ''
-$updated = $text
+$updated = $mine
 $diff = foreach ($key in $changes.Keys) {
 	$old = Get-Var $key
-	if ($old -eq $changes[$key]) { continue }
-	$updated = [regex]::Replace($updated, "(?m)^$key=.*?(?=\r?$)", { "$key=$($changes[$key])" })
-	"$key`: $old  →  $($changes[$key])"
+	# Saved even when it matches the default, so the defaults can change without moving this PC
+	$line = "$key=$($changes[$key])"
+	if ($updated -match "(?m)^$key=") {
+		$updated = [regex]::Replace($updated, "(?m)^$key=.*?(?=\r?$)", { $line })
+	} else {
+		$updated = $updated.TrimEnd("`r", "`n") + "`r`n$line`r`n"
+	}
+	if ($old -ne $changes[$key]) { "$key`: $old  ->  $($changes[$key])" }
 }
-if (-not $diff) {
-	Say '🎉' 'Everything already matches this PC. Nothing to change!' Green
+if ($updated -eq $mine) {
+	Say '' 'Everything already matches this PC. Nothing to change.' Green
 	return
 }
-$diff | ForEach-Object { Say '✏️' $_ }
-if ($PSCmdlet.ShouldProcess($varsPath, 'Update settings')) {
-	[IO.File]::WriteAllText($varsPath, $updated)
-	Say '✅' 'Saved Variables.inc' Green
+$diff | ForEach-Object { Say '*' $_ }
+if ($PSCmdlet.ShouldProcess($minePath, 'Save settings')) {
+	[IO.File]::WriteAllText($minePath, $updated)
+	Say '' "Saved $minePath" Green
 	$rainmeter = Get-Process Rainmeter -ErrorAction SilentlyContinue | Select-Object -First 1
 	if ($rainmeter) {
 		& $rainmeter.Path '!RefreshApp'
-		Say '🔄' 'Refreshed Rainmeter' Green
+		Say '-' 'Refreshed Rainmeter' Green
 	}
 }
 Write-Host ''

@@ -14,7 +14,9 @@ Remove-Item $out -ErrorAction SilentlyContinue
 
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem
 
-# VariableFiles: on reinstall, Rainmeter keeps the user's own values in these files
+# MergeSkins: copy over the installed folder instead of replacing it, so the user's
+# MyVariables.inc (not in the package) survives an upgrade. The installer still labels this
+# "Backup and replace"; that label doesn't look at MergeSkins.
 $ini = @"
 [rmskin]
 Name=my_widgets
@@ -24,7 +26,7 @@ MinimumRainmeter=4.5.0
 MinimumWindows=10.0
 LoadType=Skin
 Load=SystemMonitor\Weather\Weather.ini
-VariableFiles=SystemMonitor\@Resources\Variables.inc
+MergeSkins=1
 "@
 
 $zip = [IO.Compression.ZipFile]::Open($out, 'Create')
@@ -34,8 +36,11 @@ try {
 	$writer.Write(($ini -replace "`r?`n", "`r`n") + "`r`n")
 	$writer.Dispose()
 
+	# The 400x60 banner at the top of the install window
+	[void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, (Join-Path $PSScriptRoot 'RMSKIN.bmp'), 'RMSKIN.bmp', 'Optimal')
+
 	# Leave out what each PC makes for itself
-	$files = Get-ChildItem $skin -Recurse -File | Where-Object { $_.FullName -notmatch '\\Icons\\auto\\' -and $_.Name -ne 'Games.inc' }
+	$files = Get-ChildItem $skin -Recurse -File | Where-Object { $_.FullName -notmatch '\\Icons\\auto\\' -and $_.Name -notin 'Games.inc', 'MyVariables.inc' }
 	foreach ($file in $files) {
 		$name = 'Skins/SystemMonitor/' + $file.FullName.Substring($skin.Length + 1).Replace('\', '/')
 		[void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $file.FullName, $name, 'Optimal')
