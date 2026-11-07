@@ -7,10 +7,23 @@
   <img src="https://img.shields.io/badge/Rainmeter-4.5%2B-c882ff?style=for-the-badge" alt="Rainmeter 4.5+">
   <img src="https://img.shields.io/badge/PowerShell-5.1-6edc82?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell 5.1">
   <img src="https://img.shields.io/badge/vibes-immaculate-ffb43c?style=for-the-badge" alt="vibes: immaculate">
+  <br>
+  <a href="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml"><img src="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml/badge.svg" alt="Checks"></a>
+  <a href="https://github.com/Kayla-LeeJ/my_widgets/releases/latest"><img src="https://img.shields.io/badge/download-.rmskin-c882ff" alt="Download .rmskin"></a>
 </p>
 
 <p align="center"><b>A matching set of glassy Rainmeter widgets that make your desktop feel alive</b><br>
 hardware stats 🌡️ · a weather sky that follows the real sun 🌅 · now playing 🎵 · a game launcher that finds your games by itself 🎮</p>
+
+---
+
+## 📸 The real thing
+
+<p align="center">
+  <img src="docs/screenshots/column.png" alt="The widget column: GPU, network, CPU, drives, Valheim server, now playing and weather cards" height="720">
+  &nbsp;&nbsp;&nbsp;
+  <img src="docs/screenshots/dock.png" alt="The game dock with two rows of game icons" width="480" align="top">
+</p>
 
 ---
 
@@ -29,6 +42,9 @@ hardware stats 🌡️ · a weather sky that follows the real sun 🌅 · now pl
 | 🎮 | **Game Dock** | Every installed game from **Steam**, **Battle.net** and **Epic**, found automatically. Install something new and its icon pops up within a minute. A little dot shows what's running |
 
 > [!TIP]
+> **Right-click any widget → Theme** to repaint the whole desktop in one click: 🌌 Midnight · 🌸 Sakura · 🌲 Forest · 🌊 Ocean · ⚫ Mono
+
+> [!NOTE]
 > Every widget reads its settings from one file: [`SystemMonitor/@Resources/Variables.inc`](SystemMonitor/@Resources/Variables.inc). Colours, thresholds, your city, which drives to show… it's all in there.
 
 ---
@@ -51,46 +67,63 @@ The Weather card uses [open-meteo.com](https://open-meteo.com/), which is free a
 
 ## 🚀 Installation
 
-### 1. Install Rainmeter
-Grab it from [rainmeter.net](https://www.rainmeter.net/) and run the installer (the *Standard* install is perfect).
+### Option A: the one-click way 🪄
+1. Install [Rainmeter](https://www.rainmeter.net/).
+2. Grab the latest **`my_widgets_x.y.z.rmskin`** from [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases/latest).
+3. Double-click it → **Install**. Done! The Weather card loads straight away. Load the rest from **Manage** (step 5 below).
 
-### 2. Get the widgets
+Updating later? Just install the newer `.rmskin`. Your settings in `Variables.inc` are kept. ✨
+
+### Option B: the developer way 🛠️
 
 ```bash
 git clone https://github.com/Kayla-LeeJ/my_widgets.git
 ```
 
-### 3. Put them where Rainmeter can see them
-Copy the `SystemMonitor` folder into your Rainmeter skins folder, usually `Documents\Rainmeter\Skins`.
-
-<details>
-<summary>💡 <b>Pro move:</b> link the folder instead, so <code>git pull</code> updates your desktop</summary>
-
-Run this in PowerShell from inside the cloned repo:
+Then link the repo into Rainmeter's skins folder, so `git pull` updates your desktop and your edits are ready to commit. Run this in PowerShell from inside the cloned repo:
 
 ```powershell
 New-Item -ItemType Junction -Path "$([Environment]::GetFolderPath('MyDocuments'))\Rainmeter\Skins\SystemMonitor" -Target "$PWD\SystemMonitor"
 ```
 
-Now the repo *is* your skin. Edit, refresh, commit. ✨
+<details>
+<summary>Rather copy than link?</summary>
+
+Copy the `SystemMonitor` folder into `Documents\Rainmeter\Skins`. You'll need to copy again after each `git pull`.
 </details>
 
-### 4. Set up LibreHardwareMonitor (for the CPU, GPU and Drives cards)
+---
+
+## 🔧 Setup
+
+### 1. Turn on LibreHardwareMonitor (for the CPU, GPU and Drives cards)
 1. Run **LibreHardwareMonitor** as administrator.
 2. Turn on **Options → Remote Web Server → Run**. The default port `8085` is what the widgets expect.
-3. Also tick **Options → Run On Windows Startup** and **Start Minimized** so it's always there.
-4. Open <http://localhost:8085> and find your sensor IDs (like `/intelcpu/0/temperature/10`).
-5. Paste them into the **Sensors** section of `Variables.inc`. The ones there match the PC these were built on (i9-9900, RX 6600 XT), so yours will probably be different.
+3. Tick **Options → Run On Windows Startup** and **Start Minimized** so it's always there.
 
-### 5. Make it yours
-Open `SystemMonitor/@Resources/Variables.inc` and set:
-- 🌍 `WeatherCity`, `WeatherLat`, `WeatherLon`: your location (`celsius` or `fahrenheit` too)
-- 💾 `Drive1Label`… `Drive3Label`: the names and sensors of your drives
+### 2. Run the setup wizard 🧙
+From the repo folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Setup.ps1
+```
+
+It finds your CPU, GPU and drive sensors, matches drives to their letters, asks for your city and looks up its coordinates (free, no API key), then saves everything to `Variables.inc` and refreshes Rainmeter. Add `-WhatIf` to preview the changes first, or `-City "Tokyo" -Units fahrenheit` to skip the question.
+
+<details>
+<summary>Doing it by hand instead</summary>
+
+Open <http://localhost:8085>, find your sensor IDs (like `/intelcpu/0/temperature/10`) and paste them into the **Sensors** section of `SystemMonitor/@Resources/Variables.inc`. Set `WeatherCity`, `WeatherLat` and `WeatherLon` in the **Weather** section.
+</details>
+
+### 3. Make it yours
+In `SystemMonitor/@Resources/Variables.inc`:
+- 🎨 `Theme`: `Midnight`, `Sakura`, `Forest`, `Ocean` or `Mono` (or right-click any widget)
 - 🎮 `DockColumns`: icons per row in the Game Dock
 - 🙈 `DockHide`: games to keep off the dock, e.g. `Outlast,Wallpaper Engine`
-- 🎨 The **Look** section: every colour, if you want a different theme
+- 🌡️ The **Thresholds** section: when temperatures turn warm and hot
 
-### 6. Load them
+### 4. Load them
 Right-click the Rainmeter icon in the tray → **Manage** → open **SystemMonitor**, then pick each widget and hit **Load**. Drag them around until it looks right. 🖱️
 
 ---
@@ -113,7 +146,24 @@ flowchart LR
 
 ---
 
+## 🎨 Make your own theme
+
+Copy any file in [`SystemMonitor/@Resources/Themes`](SystemMonitor/@Resources/Themes), rename it (say `Lavender.inc`), change the colours (`R,G,B` or `R,G,B,alpha`), then set `Theme=Lavender` in `Variables.inc`. To get it in the right-click menu too, add a line for it next to the others in `Common.inc`, `Dock.ini` and `Links.ini`.
+
+---
+
 ## 🗂️ What's where
+
+```text
+my_widgets/
+├── Setup.ps1                🧙 setup wizard
+├── tools/Build-Rmskin.ps1   📦 builds the one-click installer
+├── .github/workflows/       🤖 checks on every push, releases on every tag
+└── SystemMonitor/           the skin itself
+    └── @Resources/
+        ├── Variables.inc    ← ⭐ all your settings
+        └── Themes/          🎨 colour themes
+```
 
 ```text
 SystemMonitor/
@@ -159,6 +209,20 @@ The server has to write a log. Add `-logFile` to the server's `start_headless_se
 
 Wait a minute, since the dock checks every 60 seconds. Steam games only appear once fully downloaded. To hide something, add its name or Steam app ID to `DockHide` in `Variables.inc`.
 </details>
+
+---
+
+## 📦 Releasing a new version
+
+```bash
+git tag v1.1.0
+```
+
+```bash
+git push origin v1.1.0
+```
+
+GitHub builds `my_widgets_1.1.0.rmskin` and publishes it on the [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases) page. 🚀 To build one locally instead: `.\tools\Build-Rmskin.ps1 -Version 1.1.0` (it lands in `dist\`).
 
 ---
 

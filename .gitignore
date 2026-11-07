@@ -19,3 +19,6 @@ desktop.ini
 .DS_Store
 .vscode/
 .idea/
+
+# Built packages (tools/Build-Rmskin.ps1)
+dist/

@@ -1,0 +1,27 @@
+# Push a tag like v1.2.0 and this builds my_widgets_1.2.0.rmskin and publishes it as a GitHub release:
+#   git tag v1.2.0
+#   git push origin v1.2.0
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build .rmskin
+        shell: powershell
+        run: .\tools\Build-Rmskin.ps1 -Version $env:GITHUB_REF_NAME.TrimStart('v')
+
+      - name: Publish release
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME (Get-ChildItem dist\*.rmskin).FullName --title "my_widgets $env:GITHUB_REF_NAME" --generate-notes

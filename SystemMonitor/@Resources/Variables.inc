@@ -77,6 +77,9 @@ DiskWarm=85
 DiskHot=95
 
 ; ---------------------------------------------------------------- Look
+; Colour theme: a file in @Resources\Themes (Midnight, Sakura, Forest, Ocean, Mono).
+; Right-click any widget > Theme to switch. The colours below are the fallback.
+Theme=Midnight
 ColorBg=18,18,24,190
 ColorBorder=255,255,255,25
 ColorText=235,235,240
@@ -87,6 +90,7 @@ ColorWarm=255,180,60
 ColorHot=255,80,80
 ColorUpload=200,130,255
 ColorGood=110,220,130
+@IncludeTheme=#@#Themes\#Theme#.inc
 ; Graph fill transparency (0-255)
 GraphFillAlpha=50
 
