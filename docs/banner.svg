@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <style>
+    .sky { animation: hue 12s linear infinite; }
+    @keyframes hue { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(360deg); } }
+    .star { animation: twinkle 3s ease-in-out infinite; }
+    .s2 { animation-delay: .8s; } .s3 { animation-delay: 1.6s; } .s4 { animation-delay: 2.2s; }
+    @keyframes twinkle { 0%,100% { opacity: .2; } 50% { opacity: 1; } }
+    .card { animation: float 4s ease-in-out infinite; }
+    .c2 { animation-delay: .5s; } .c3 { animation-delay: 1s; } .c4 { animation-delay: 1.5s; } .c5 { animation-delay: 2s; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .bar { animation: pulse 1.4s ease-in-out infinite; transform-origin: bottom; transform-box: fill-box; }
+    .b2 { animation-delay: .2s; } .b3 { animation-delay: .4s; } .b4 { animation-delay: .6s; } .b5 { animation-delay: .8s; }
+    @keyframes pulse { 0%,100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+    .ring { animation: spin 6s linear infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .title { animation: rise 1.2s ease-out both; }
+    .sub { animation: rise 1.2s .4s ease-out both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b1035"/>
+      <stop offset=".55" stop-color="#3a1e5c"/>
+      <stop offset="1" stop-color="#0f2a4a"/>
+    </linearGradient>
+    <linearGradient id="txt" x1="0" x2="1">
+      <stop offset="0" stop-color="#50c8ff"/>
+      <stop offset=".5" stop-color="#c882ff"/>
+      <stop offset="1" stop-color="#6edc82"/>
+    </linearGradient>
+  </defs>
+
+  <rect class="sky" width="900" height="260" rx="22" fill="url(#bg)"/>
+
+  <g fill="#fff">
+    <circle class="star" cx="60" cy="40" r="1.8"/><circle class="star s2" cx="190" cy="25" r="1.4"/>
+    <circle class="star s3" cx="330" cy="50" r="1.6"/><circle class="star s4" cx="520" cy="22" r="1.4"/>
+    <circle class="star s2" cx="700" cy="38" r="1.8"/><circle class="star" cx="850" cy="60" r="1.4"/>
+    <circle class="star s3" cx="420" cy="230" r="1.2"/><circle class="star s4" cx="120" cy="215" r="1.4"/>
+  </g>
+
+  <text class="title" x="450" y="92" text-anchor="middle" font-size="54" font-weight="800" fill="url(#txt)">my_widgets</text>
+  <text class="sub" x="450" y="124" text-anchor="middle" font-size="18" fill="#ebebf0" opacity=".85">a cozy little Rainmeter desktop  ✦  stats · weather · music · games</text>
+
+  <!-- CPU: pulsing bars -->
+  <g transform="translate(95 150)"><g class="card">
+    <rect width="120" height="80" rx="14" fill="#121218" fill-opacity=".75" stroke="#fff" stroke-opacity=".12"/>
+    <text x="14" y="22" font-size="12" fill="#8c8c9b">CPU</text>
+    <g fill="#50c8ff">
+      <rect class="bar" x="16" y="34" width="12" height="34" rx="3"/>
+      <rect class="bar b2" x="36" y="34" width="12" height="34" rx="3"/>
+      <rect class="bar b3" x="56" y="34" width="12" height="34" rx="3"/>
+      <rect class="bar b4" x="76" y="34" width="12" height="34" rx="3"/>
+      <rect class="bar b5" x="96" y="34" width="12" height="34" rx="3"/>
+    </g>
+  </g></g>
+
+  <!-- GPU: spinning gauge -->
+  <g transform="translate(235 150)"><g class="card c2">
+    <rect width="120" height="80" rx="14" fill="#121218" fill-opacity=".75" stroke="#fff" stroke-opacity=".12"/>
+    <text x="14" y="22" font-size="12" fill="#8c8c9b">GPU</text>
+    <circle cx="60" cy="50" r="18" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="6"/>
+    <circle class="ring" cx="60" cy="50" r="18" fill="none" stroke="#ffb43c" stroke-width="6" stroke-dasharray="70 44" stroke-linecap="round"/>
+  </g></g>
+
+  <!-- Weather: sun -->
+  <g transform="translate(375 150)"><g class="card c3">
+    <rect width="150" height="80" rx="14" fill="#121218" fill-opacity=".75" stroke="#fff" stroke-opacity=".12"/>
+    <text x="14" y="22" font-size="12" fill="#8c8c9b">Weather</text>
+    <g class="ring">
+      <circle cx="44" cy="52" r="11" fill="#ffd25a"/>
+      <g stroke="#ffd25a" stroke-width="3" stroke-linecap="round">
+        <line x1="44" y1="32" x2="44" y2="36"/><line x1="44" y1="68" x2="44" y2="72"/>
+        <line x1="24" y1="52" x2="28" y2="52"/><line x1="60" y1="52" x2="64" y2="52"/>
+      </g>
+    </g>
+    <text x="78" y="60" font-size="24" font-weight="700" fill="#ebebf0">23°</text>
+  </g></g>
+
+  <!-- Now playing: equalizer -->
+  <g transform="translate(545 150)"><g class="card c4">
+    <rect width="120" height="80" rx="14" fill="#121218" fill-opacity=".75" stroke="#fff" stroke-opacity=".12"/>
+    <text x="14" y="22" font-size="12" fill="#8c8c9b">Now Playing</text>
+    <g fill="#c882ff">
+      <rect class="bar b3" x="22" y="36" width="8" height="32" rx="3"/>
+      <rect class="bar" x="36" y="36" width="8" height="32" rx="3"/>
+      <rect class="bar b4" x="50" y="36" width="8" height="32" rx="3"/>
+      <rect class="bar b2" x="64" y="36" width="8" height="32" rx="3"/>
+      <rect class="bar b5" x="78" y="36" width="8" height="32" rx="3"/>
+      <rect class="bar b3" x="92" y="36" width="8" height="32" rx="3"/>
+    </g>
+  </g></g>
+
+  <!-- Game dock -->
+  <g transform="translate(685 150)"><g class="card c5">
+    <rect width="120" height="80" rx="14" fill="#121218" fill-opacity=".75" stroke="#fff" stroke-opacity=".12"/>
+    <text x="14" y="22" font-size="12" fill="#8c8c9b">Games</text>
+    <rect x="16" y="36" width="24" height="24" rx="6" fill="#6edc82"/>
+    <rect x="48" y="36" width="24" height="24" rx="6" fill="#50c8ff"/>
+    <rect x="80" y="36" width="24" height="24" rx="6" fill="#ff5050"/>
+    <circle class="star" cx="28" cy="68" r="2.5" fill="#50c8ff"/>
+  </g></g>
+</svg>
