@@ -5,6 +5,8 @@
 # Run it from the repo folder:   powershell -ExecutionPolicy Bypass -File .\Setup.ps1
 # Add -WhatIf to see what would change without writing anything.
 
+# Write-Host is on purpose: the wizard talks to a person, in colour
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
 [CmdletBinding(SupportsShouldProcess)]
 param(
 	[string]$City,
@@ -141,7 +143,7 @@ $updated = $text
 $diff = foreach ($key in $changes.Keys) {
 	$old = Get-Var $key
 	if ($old -eq $changes[$key]) { continue }
-	$updated = [regex]::Replace($updated, "(?m)^$key=.*?(?=\r?$)", { param($m) "$key=$($changes[$key])" })
+	$updated = [regex]::Replace($updated, "(?m)^$key=.*?(?=\r?$)", { "$key=$($changes[$key])" })
 	"$key`: $old  →  $($changes[$key])"
 }
 if (-not $diff) {

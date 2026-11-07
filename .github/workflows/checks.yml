@@ -11,7 +11,7 @@ jobs:
   check:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Scripts parse
         shell: powershell
@@ -41,7 +41,7 @@ jobs:
         shell: powershell
         run: .\tools\Build-Rmskin.ps1 -Version "0.0.0-$($env:GITHUB_SHA.Substring(0, 7))"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: my_widgets-rmskin
           path: dist/*.rmskin
