@@ -26,7 +26,7 @@ A set of [Rainmeter](https://www.rainmeter.net/) widgets for Windows: hardware m
     <td><img src="docs/screenshots/weather.png" alt="Weather card" width="340"></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="docs/screenshots/dock.png" alt="Game dock with two rows of game icons" width="479"></td>
+    <td colspan="2" align="center"><img src="docs/screenshots/game-dock.png" alt="Game dock with two rows of game icons" width="479"></td>
   </tr>
 </table>
 
