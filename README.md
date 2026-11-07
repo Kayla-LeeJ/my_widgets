@@ -10,6 +10,7 @@
   <br>
   <a href="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml"><img src="https://github.com/Kayla-LeeJ/my_widgets/actions/workflows/checks.yml/badge.svg" alt="Checks"></a>
   <a href="https://github.com/Kayla-LeeJ/my_widgets/releases/latest"><img src="https://img.shields.io/badge/download-.rmskin-c882ff" alt="Download .rmskin"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6edc82" alt="MIT license"></a>
 </p>
 
 <p align="center"><b>A matching set of glassy Rainmeter widgets that make your desktop feel alive</b><br>
@@ -223,6 +224,14 @@ git push origin v1.1.0
 ```
 
 GitHub builds `my_widgets_1.1.0.rmskin` and publishes it on the [Releases](https://github.com/Kayla-LeeJ/my_widgets/releases) page. 🚀 To build one locally instead: `.\tools\Build-Rmskin.ps1 -Version 1.1.0` (it lands in `dist\`).
+
+---
+
+## 📜 License
+
+[MIT](LICENSE): use it, tweak it, share it, just keep the copyright notice. 💜
+
+Game logos and artwork (in `SystemMonitor/@Resources/Icons` and `Images`, and the icons the Game Dock downloads) belong to their respective owners (Blizzard Entertainment, Iron Gate, Lazy Bear Games and the other game studios). They're used here for personal, non-commercial fan purposes and aren't covered by the MIT license.
 
 ---
 
