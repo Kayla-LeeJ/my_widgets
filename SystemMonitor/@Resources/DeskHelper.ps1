@@ -47,7 +47,7 @@ $script:coverTries = 0
 $script:coverCount = 0
 
 # Some apps publish the artwork a moment after the title, so a missing cover is retried a few times.
-function Update-Cover($key, $thumbnail) {
+function Save-Cover($key, $thumbnail) {
 	if ($key -ne $script:coverKey) {
 		$script:coverKey = $key
 		$script:coverPath = ''
@@ -71,7 +71,7 @@ function Update-Cover($key, $thumbnail) {
 		[System.IO.File]::WriteAllBytes($path, $bytes)
 		Get-ChildItem $coverDir -File | Where-Object FullName -ne $path | Remove-Item -Force -ErrorAction SilentlyContinue
 		$script:coverPath = $path
-	} catch { }
+	} catch { Write-Verbose "Cover art not ready yet, will retry: $_" }
 }
 
 # ---------------------------------------------------------------- State
@@ -108,7 +108,7 @@ function Get-State {
 		$position = [Math]::Max(0, [Math]::Min($position, $duration))
 	}
 
-	Update-Cover "$app|$($props.Title)|$($props.Artist)" $props.Thumbnail
+	Save-Cover "$app|$($props.Title)|$($props.Artist)" $props.Thumbnail
 	return "status=$status`ntitle=$(Clean $props.Title)`nartist=$(Clean $props.Artist)`napp=$app`n" +
 		"pos=$([int]$position)`ndur=$([int]$duration)`ncover=$($script:coverPath)"
 }
