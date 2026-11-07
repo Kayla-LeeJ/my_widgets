@@ -1,0 +1,47 @@
+# On every push and pull request: make sure the scripts parse and pass PSScriptAnalyzer,
+# and that the .rmskin still builds (downloadable from the run's Artifacts).
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scripts parse
+        shell: powershell
+        run: |
+          $failed = $false
+          foreach ($file in Get-ChildItem -Recurse -Filter *.ps1) {
+            $tokens = $null; $errors = $null
+            [void][Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
+            foreach ($e in $errors) { Write-Host "::error file=$($file.FullName),line=$($e.Extent.StartLineNumber)::$($e.Message)"; $failed = $true }
+          }
+          if ($failed) { exit 1 }
+
+      - name: PSScriptAnalyzer
+        shell: powershell
+        run: |
+          Install-PackageProvider NuGet -Force -Scope CurrentUser | Out-Null
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          $results = Invoke-ScriptAnalyzer -Path . -Recurse -Severity Error, Warning
+          foreach ($r in $results) {
+            $level = if ($r.Severity -eq 'Error') { 'error' } else { 'warning' }
+            Write-Host "::$level file=$($r.ScriptPath),line=$($r.Line)::$($r.RuleName): $($r.Message)"
+          }
+          # Warnings show up as annotations; only errors fail the run
+          if ($results | Where-Object Severity -eq 'Error') { exit 1 }
+
+      - name: Build .rmskin
+        shell: powershell
+        run: .\tools\Build-Rmskin.ps1 -Version "0.0.0-$($env:GITHUB_SHA.Substring(0, 7))"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: my_widgets-rmskin
+          path: dist/*.rmskin
